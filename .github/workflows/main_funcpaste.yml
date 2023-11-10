@@ -34,6 +34,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Generate .env File
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+          # Add other secrets as needed
+
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment

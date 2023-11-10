@@ -25,7 +25,6 @@ def index():
 @flask_app.route("/upload", methods = ["POST"]) 
 def upload():
     file = request.files.get("file")
-    file.con
     url  = blob.upload(file.filename,file)
     #print(type(file))
     sqlfile = File(name=file.filename[:10],type = Strtype.url ,value=url)

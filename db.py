@@ -16,7 +16,7 @@ from os import getenv
 
 load_dotenv()
 
-connection_string = f"mysql+mysqlconnector://{getenv('DATABASE_USERNAME')}:{getenv('DATABASE_PASSWORD')}@{getenv('DATABASE_HOST')}:3306/{getenv('DATABASE')}"
+connection_string = f"mysql+mysqlconnector://{getenv('DATABASE_CONNECTION_STRING')}"
 
 engine = create_engine(connection_string, echo=True)
 
