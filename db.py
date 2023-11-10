@@ -53,9 +53,9 @@ def insert_file(file:File) -> None:
         session.add(file)
         session.commit()
 
-def delete_file(file:File) -> None:
+def delete_file(id:int) -> None:
     with Session(engine) as session:
-        session.query(File).filter(File.id == file.id).delete()
+        session.query(File).filter(File.id == id).delete()
         # session.delete(file)
         session.commit()
 

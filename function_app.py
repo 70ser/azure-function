@@ -2,7 +2,7 @@ import azure.functions as func
 import logging
 
 from db import File,Strtype,select_file,insert_file,delete_file
-
+import blob
 from flask import Flask, request, redirect
 from flask import render_template
 #app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
@@ -25,7 +25,10 @@ def index():
 @flask_app.route("/upload", methods = ["POST"]) 
 def upload():
     file = request.files.get("file")
-    sqlfile = File(name=file.filename[:10],type = Strtype.url ,value=f"https://file.sprb.tk/{file.filename}")
+    file.con
+    url  = blob.upload(file.filename,file)
+    #print(type(file))
+    sqlfile = File(name=file.filename[:10],type = Strtype.url ,value=url)
     insert_file(sqlfile)
     return redirect("/")
 
@@ -38,7 +41,8 @@ def text():
 
 @flask_app.route("/delete/<int:id>")
 def delete(id:int):
-    file = File(id=id)
-    delete_file(file)
+    #file = File(id=id)
+    # we current do not delete file in blob , only row in mysql is deleted
+    delete_file(id)
     return redirect("/")
 
