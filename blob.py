@@ -17,7 +17,10 @@ container_client = blob_service_client.get_container_client("file")
 # southeast asia ia sg
 
 def upload(name: str , file: bytes) -> str: # type of file could be various
-    headers = ContentSettings(content_disposition=f"inline; filename={name}") # when file is inline, the filename will not be parsed
+    # header does not support chinese!!!! 
+    # because of Access-Control-Expose-Headers , we could not see Content-Disposition in browser
+    # but Content-Disposition did work
+    headers = ContentSettings(content_disposition=f"inline") # when file is inline, the filename will not be parsed
     name = f"{hex(int(time.time()))[2:]}-{name}" 
     blob_client = container_client.get_blob_client(name)
     #blob_client = blob_service_client.get_blob_client(container="file", blob=name)
@@ -32,3 +35,10 @@ def delete(name: str) -> None:
     blob_client.delete_blob()
 
 #blob_client = blob_service_client.get_blob_client(container="file", blob="hello.txt")
+
+def main():
+    with open("中文名","rb") as f:
+        print(upload("中文名",f))
+
+if __name__ == "__main__":
+    main()
